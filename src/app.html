@@ -83,7 +83,7 @@
         </div>
 
       </main>
-      <sidebar v-show="isSidebar" :cart="cart" :toggle="toggleSidebar"/>  
+      <sidebar v-show="isSidebar" :cart="cart" :inventory="inventory" :toggle="toggleSidebar"/>  
       <footer>
       </footer>
 
@@ -119,10 +119,18 @@
       }
       })
       app.component("sidebar", {
-        props:['toggle','cart'],
-        computed:{
+        props:['toggle','cart',"inventory"],
+        methods:{
           cartTotal(){
-            return  (this.cart.carrots * 4.82).toFixed(2)
+             return Object.entries(this.cart).reduce((total,current, index)=>{
+                return total + (this.getPrice(current[0]) * current[1])
+             },0)
+          },
+          getPrice(name){
+            const product = this.inventory.find((p)=>{
+              return p.name === name
+            })
+            return product.price.USD
           }
         },
         template :`
@@ -149,12 +157,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="(value, key) in cart" >
                   <td><i class="icofont-carrot icofont-3x"></i></td>
-                  <td>Carrot</td>
-                  <td>$4.83</td>
-                  <td class="center">{{cart.carrots}}</td>
-                  <td>\${{cart.carrots * 4.82}}</td>
+                  <td>{{key}}</td>
+                  <td>\${{getPrice(key)}}</td>
+                  <td class="center">{{value}}</td>
+                  <td>\${{(getPrice(key) * value).toFixed(2)}}</td>
                   <td class="center">
                     <button class="btn btn-light cart-remove">
                       &times;
@@ -164,9 +172,9 @@
               </tbody>
             </table>
 
-            <p class="center"><em>No items in cart</em></p>
+            <p class="center" v-if="!Object.values(cart).length"><em>No items in cart</em></p>
             <div class="spread">
-              <span><strong>Total:</strong> \${{cartTotal}}</span>
+              <span><strong>Total:</strong> \${{ cartTotal() }}</span>
               <button class="btn btn-light">Checkout</button>
             </div>
           </div>
