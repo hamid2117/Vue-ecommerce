@@ -25,7 +25,7 @@
         </nav>
         <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>cart (0)</span>
+          <span>cart ({{ totalQuantity() }})</span>
         </a>
       </header>
 
@@ -83,7 +83,7 @@
         </div>
 
       </main>
-      <sidebar v-show="isSidebar" :cart="cart" :inventory="inventory" :toggle="toggleSidebar"/>  
+      <sidebar v-show="isSidebar" :remove="removeItem" :cart="cart" :inventory="inventory" :toggle="toggleSidebar"/>  
       <footer>
       </footer>
 
@@ -110,6 +110,12 @@
         },
         toggleSidebar(){
           this.isSidebar = !this.isSidebar
+        },
+        removeItem(key){
+          delete this.cart[key]
+        },
+        totalQuantity(){
+        return Object.values(this.cart).reduce((total,current)=> {return total + current},0)
         }
       },
       async mounted(){
@@ -119,12 +125,12 @@
       }
       })
       app.component("sidebar", {
-        props:['toggle','cart',"inventory"],
+        props:['toggle','cart',"inventory","remove"],
         methods:{
           cartTotal(){
              return Object.entries(this.cart).reduce((total,current, index)=>{
                 return total + (this.getPrice(current[0]) * current[1])
-             },0)
+             },0).toFixed(2)
           },
           getPrice(name){
             const product = this.inventory.find((p)=>{
@@ -164,7 +170,7 @@
                   <td class="center">{{value}}</td>
                   <td>\${{(getPrice(key) * value).toFixed(2)}}</td>
                   <td class="center">
-                    <button class="btn btn-light cart-remove">
+                    <button @click="remove(key)" class="btn btn-light cart-remove">
                       &times;
                     </button>
                   </td>
