@@ -58,6 +58,6 @@
 export default {
   name: 'HomeView',
   // eslint-disable-next-line
-  props: ['inventory']
+  props: ['inventory', 'addToCart']
 }
 </script>

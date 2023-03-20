@@ -12,10 +12,10 @@
         <span>Past Orders</span>
       </router-link>
     </nav>
-    <!--<a @click="toggleSidebar" class="top-bar-cart-link">
+    <a @click="toggleSidebar" class="top-bar-cart-link">
       <i class="icofont-cart-alt icofont-1x"></i>
       <span>cart ({{ totalQuantity() }})</span>
-    </a>-->
+    </a>
   </header>
   <Sidebar
     v-show="isSidebar"
@@ -24,7 +24,7 @@
     :inventory="inventory"
     :toggle="toggleSidebar"
   />
-  <router-view :inventory="inventory" />
+  <router-view :inventory="inventory" :addToCart="addToCart" />
 </template>
 <!--<style scoped>  // if we scoped then css will only use in this file -->
 
@@ -64,9 +64,7 @@ export default {
   },
   // eslint-disable-next-line
   async mounted() {
-    const res = food
-    const data = await res.json()
-    this.inventory = data
+    this.inventory = food
   }
 }
 </script>
