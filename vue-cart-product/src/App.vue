@@ -17,28 +17,56 @@
       <span>cart ({{ totalQuantity() }})</span>
     </a>-->
   </header>
-  <router-view />
+  <Sidebar
+    v-show="isSidebar"
+    :remove="removeItem"
+    :cart="cart"
+    :inventory="inventory"
+    :toggle="toggleSidebar"
+  />
+  <router-view :inventory="inventory" />
 </template>
 <!--<style scoped>  // if we scoped then css will only use in this file -->
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
+<script>
+import food from '@/food.json'
+import Sidebar from '@/components/Sidebar.vue'
+export default {
+  components: { Sidebar },
+  // eslint-disable-next-line
+  data() {
+    return {
+      isSidebar: false,
+      inventory: [],
+      cart: {}
+    }
+  },
+  methods: {
+    // eslint-disable-next-line
+    addToCart(name, index) {
+      if (!this.cart[name]) this.cart[name] = 0
+      this.cart[name] += this.inventory[index].quantity
+    },
+    // eslint-disable-next-line
+    toggleSidebar() {
+      this.isSidebar = !this.isSidebar
+    },
+    // eslint-disable-next-line
+    removeItem(key) {
+      delete this.cart[key]
+    },
+    // eslint-disable-next-line
+    totalQuantity() {
+      return Object.values(this.cart).reduce((total, current) => {
+        return total + current
+      }, 0)
+    }
+  },
+  // eslint-disable-next-line
+  async mounted() {
+    const res = food
+    const data = await res.json()
+    this.inventory = data
+  }
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>

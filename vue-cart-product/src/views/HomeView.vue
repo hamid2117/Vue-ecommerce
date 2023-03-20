@@ -55,14 +55,9 @@
 </template>
 
 <script>
-import food from '../food.json'
 export default {
   name: 'HomeView',
   // eslint-disable-next-line
-  data() {
-    return {
-      inventory: food
-    }
-  }
+  props: ['inventory']
 }
 </script>
