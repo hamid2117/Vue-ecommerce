@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(value, key) in cart">
+            <tr v-for="(value, key) in cart" :key="key">
               <td><i class="icofont-carrot icofont-3x"></i></td>
               <td>{{ key }}</td>
               <td>\${{ getPrice(key) }}</td>
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: 'Sidebar',
+  name: 'sidebarCom',
   props: ['toggle', 'cart', 'inventory', 'remove'],
   methods: {
     // eslint-disable-next-line
