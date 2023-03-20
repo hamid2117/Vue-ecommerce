@@ -1,14 +1,14 @@
 <template>
   <header class="top-bar spread">
     <nav class="top-bar-nav">
-      <router-link to="../app.html" class="top-bar-link">
+      <router-link to="/" class="top-bar-link">
         <i class="icofont-spoon-and-fork"></i>
         <span>Home</span>
       </router-link>
-      <router-link to="products.html" class="top-bar-link">
+      <router-link to="/product" class="top-bar-link">
         <span>Products</span>
       </router-link>
-      <router-link to="past-orders.html" class="top-bar-link">
+      <router-link to="/order" class="top-bar-link">
         <span>Past Orders</span>
       </router-link>
     </nav>
