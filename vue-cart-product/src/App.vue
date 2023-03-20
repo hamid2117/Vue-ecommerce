@@ -19,7 +19,7 @@
   </header>
   <router-view />
 </template>
-
+<!--<style scoped>  // if we scoped then css will only use in this file -->
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
