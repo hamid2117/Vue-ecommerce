@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(data, i) in cart" :key="i">
+        <tr v-for="(value, key) in cart" :key="key">
           <td><i class="icofont-carrot icofont-4x"></i></td>
           <td>{{ key }}</td>
           <td>${{ getPrice(key) }}</td>
@@ -29,6 +29,16 @@
 
 <script>
 export default {
-  props: ['cart', 'getPrice']
+  props: ['cart', 'inventory'],
+
+  methods: {
+    // eslint-disable-next-line
+    getPrice(name) {
+      const product = this.inventory.find((p) => {
+        return p.name === name
+      })
+      return product.price.USD
+    }
+  }
 }
 </script>
