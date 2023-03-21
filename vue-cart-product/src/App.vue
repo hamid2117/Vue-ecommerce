@@ -24,7 +24,12 @@
     :inventory="inventory"
     :toggle="toggleSidebar"
   />
-  <router-view :inventory="inventory" :addToCart="addToCart" :cart="cart" />
+  <router-view
+    :addPastItem="addPastItem"
+    :inventory="inventory"
+    :addToCart="addToCart"
+    :cart="cart"
+  />
 </template>
 <!--<style scoped>  // if we scoped then css will only use in this file -->
 
@@ -42,6 +47,10 @@ export default {
     }
   },
   methods: {
+    // eslint-disable-next-line
+    addPastItem(name, quantity) {
+      this.cart[name] += quantity
+    },
     // eslint-disable-next-line
     addToCart(name, index) {
       if (!this.cart[name]) this.cart[name] = 0

@@ -20,7 +20,11 @@
           <td>${{ getPrice(key) }}</td>
           <td class="center">{{ value }}</td>
           <td>${{ (getPrice(key) * value).toFixed(2) }}</td>
-          <td><button class="btn btn-dark">Add</button></td>
+          <td>
+            <button @click="addPastItem(key, value)" class="btn btn-dark">
+              Add
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -29,7 +33,7 @@
 
 <script>
 export default {
-  props: ['cart', 'inventory'],
+  props: ['cart', 'inventory', 'addPastItem'],
 
   methods: {
     // eslint-disable-next-line
