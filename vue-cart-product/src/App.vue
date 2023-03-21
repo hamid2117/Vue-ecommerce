@@ -24,7 +24,7 @@
     :inventory="inventory"
     :toggle="toggleSidebar"
   />
-  <router-view :inventory="inventory" :addToCart="addToCart" />
+  <router-view :inventory="inventory" :addToCart="addToCart" :cart="cart" />
 </template>
 <!--<style scoped>  // if we scoped then css will only use in this file -->
 

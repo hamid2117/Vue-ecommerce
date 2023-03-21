@@ -14,23 +14,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="(data, i) in cart" :key="i">
           <td><i class="icofont-carrot icofont-4x"></i></td>
-          <td>Carrot</td>
-          <td>$1.00</td>
-          <td>1</td>
-          <td>$1.00</td>
-          <td><button class="btn btn-dark">Add</button></td>
-        </tr>
-        <tr>
-          <td><i class="icofont-banana icofont-4x"></i></td>
-          <td>Banana</td>
-          <td>$0.50</td>
-          <td>10</td>
-          <td>$5.00</td>
+          <td>{{ key }}</td>
+          <td>${{ getPrice(key) }}</td>
+          <td class="center">{{ value }}</td>
+          <td>${{ (getPrice(key) * value).toFixed(2) }}</td>
           <td><button class="btn btn-dark">Add</button></td>
         </tr>
       </tbody>
     </table>
   </main>
 </template>
+
+<script>
+export default {
+  props: ['cart', 'getPrice']
+}
+</script>
